@@ -21,5 +21,11 @@
     <ClCompile Include="secondCommit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="thirdCommit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="forthCommit.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
