@@ -122,6 +122,35 @@ public:
 };
 int Manual::numarAutori = 5;
 
+
+class Uniforma {
+	int marime;
+	static int nrComponente;
+	char* producator;
+	float pret;
+	const string culoare;
+
+	Uniforma():culoare("albastru") {
+		this->marime = 20;
+		this->pret = 5000.99;
+		this->producator = nullptr;
+	}
+
+	Uniforma(const string culoare, int marime) :culoare(culoare) {
+		this->marime = marime;
+		this->producator = nullptr;
+		this->pret = 9.99;
+	}
+
+	Uniforma(const string culoare, int marime, char* producator, float pret) :culoare(culoare) {
+		this->marime = marime;
+		this->pret = pret;
+		this->producator = new char[strlen(producator) + 1];
+		strcpy_s(producator, strlen(producator) + 1, producator);
+	}
+};
+int Uniforma::nrComponente = 5;
+
 void main() {
 
 }
