@@ -44,8 +44,7 @@ public:
 	//destructor
 	~Abecedar() {
 		if (this->pretAbecedar != nullptr) {
-			delete this->pretAbecedar;
-			this->pretAbecedar = nullptr;
+			delete[] this->pretAbecedar;
 		}
 	}
 
@@ -102,7 +101,12 @@ public:
 
 	//supraincarcare <<
 	friend ostream& operator<<(ostream& out, const Manual& m) {
-		out << m.denumire << endl;
+		if (m.denumire != nullptr) {
+			out << m.denumire << endl;
+		}
+		else {
+			out << "Nu exista denumire pt obiectul manual" << endl;
+		}
 		out << m.edituraManual << endl;
 		out << m.pretManual << endl;
 		out << m.numarAutori << endl;
@@ -110,7 +114,7 @@ public:
 	}
 	
 	//functie calcul statica
-	void calculPretPerAutor() {
+	static void calculPretPerAutor(float pretManual) {
 		if (numarAutori > 3) {
 			pretManual *= 1.7;
 		}
@@ -124,6 +128,7 @@ int Manual::numarAutori = 5;
 
 
 class Uniforma {
+public:
 	int marime;
 	static int nrComponente;
 	char* producator;
@@ -148,9 +153,51 @@ class Uniforma {
 		this->producator = new char[strlen(producator) + 1];
 		strcpy_s(producator, strlen(producator) + 1, producator);
 	}
+
+	~Uniforma() {
+		if (this->producator != nullptr) {
+			delete[]this->producator;
+		}
+		cout << "aici apelez destructor uniforma" << endl;
+	}
+
+	//overload <<
+	friend ostream& operator<<(ostream& out, const Uniforma& u) {
+		out << u.marime << endl;
+		out << u.nrComponente << endl;
+		out << u.pret << endl;
+		out << u.culoare << endl;
+		if (u.producator != nullptr) {
+			cout << u.producator << endl;
+		}
+		else {
+			cout << "Obiectul nu are valoare producator!" << endl;
+		}
+		return out;
+
+	}
+
+	//fct statica calcul
+	static float calculPretMediu(float totalPreturi) {
+		if (nrComponente > 0) {
+			return totalPreturi / nrComponente;
+		}
+		else {
+			return 0;
+		}	
+	}
+
 };
 int Uniforma::nrComponente = 5;
 
 void main() {
+	//clasa abecedar
+	//clasa manual
+	//clasa uniforma
+	Uniforma uniformaUnu;
+	cout << uniformaUnu << endl;
+	
+	float pretMediu = Uniforma::calculPretMediu(2500);
+	cout << "pretul mediu per componenta este: " << pretMediu;
 
 }
