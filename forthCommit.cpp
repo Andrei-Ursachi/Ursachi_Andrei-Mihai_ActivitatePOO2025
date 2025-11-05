@@ -28,17 +28,18 @@ public:
 		this->pretAbecedar = new float(pret);
 	}
 
-	void afisare() {
-		cout << "Titlu abecedar: " << this->titlu << ";" << "\n";
-		cout << "Numele editurii: " << this->editura << "\n";
-		cout << "Bucati vandute: " << this->bucatiVandute << "\n";
-		if (this->pretAbecedar != nullptr) {
-			cout << "Pret abecedar: " << *(this->pretAbecedar) << "\n";
+	friend ostream& operator<<(ostream& out, const Abecedar& a) {
+		out << "Titlu abecedar: " << a.titlu << ";" << "\n";
+		out << "Numele editurii: " << a.editura << "\n";
+		out << "Bucati vandute: " << a.bucatiVandute << "\n";
+		out << "Numar pagini: " << nrPagini << "\n" << endl;
+		if (a.pretAbecedar != nullptr) {
+			cout << "Pret abecedar: " << *(a.pretAbecedar) << "\n";
 		}
 		else {
 			cout << "Abecedarul nu are pret!" << "\n";
 		}
-		cout << "Numar pagini: " << nrPagini << "\n" << endl;
+		return out;
 	}
 
 	//destructor
@@ -192,6 +193,8 @@ int Uniforma::nrComponente = 5;
 
 void main() {
 	//clasa abecedar
+	Abecedar abecedarUnu;
+	cout << abecedarUnu << endl;
 	//clasa manual
 	//clasa uniforma
 	Uniforma uniformaUnu;
