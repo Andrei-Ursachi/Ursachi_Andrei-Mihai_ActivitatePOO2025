@@ -28,6 +28,7 @@ public:
 		this->pretAbecedar = new float(pret);
 	}
 
+	//supraincarcare <<
 	friend ostream& operator<<(ostream& out, const Abecedar& a) {
 		out << "Titlu abecedar: " << a.titlu << ";" << "\n";
 		out << "Numele editurii: " << a.editura << "\n";
@@ -50,11 +51,9 @@ public:
 	}
 
 	//functie statica de calcul
-	static void marirePret(Abecedar& abecedar) {
-		if (abecedar.pretAbecedar == nullptr) return;
-		int randomMarire = rand() % 20 + 1;
-		*(abecedar.pretAbecedar) += *(abecedar.pretAbecedar) * (randomMarire / 100.0f);
-		cout << "Pretul a crescut cu " << randomMarire << "% pentru " << abecedar.titlu << endl;
+	static float pretPePagina(const Abecedar& a) {
+		if (a.pretAbecedar == nullptr || nrPagini == 0) return 0;
+		return *(a.pretAbecedar) / nrPagini;
 	}
 };
 int Abecedar::nrPagini = 100;
@@ -79,7 +78,7 @@ public:
 
 	Manual(char* denumire, const string edituraManual, float pretManual) :edituraManual(edituraManual) {
 		this->denumire = new char[strlen(denumire)+1];
-		strcpy_s(denumire, strlen(denumire) + 1,denumire);
+		strcpy_s(this->denumire, strlen(denumire) + 1,denumire);
 		this->pretManual = pretManual;
 	}
 
@@ -115,13 +114,14 @@ public:
 	}
 	
 	//functie calcul statica
-	static void calculPretPerAutor(float pretManual) {
+	static float calculPretPerAutor(float pretManual) {
 		if (numarAutori > 3) {
 			pretManual *= 1.7;
 		}
 		else {
 			pretManual *= 1.1;
 		}
+		return pretManual;
 	}
 
 };
@@ -152,9 +152,10 @@ public:
 		this->marime = marime;
 		this->pret = pret;
 		this->producator = new char[strlen(producator) + 1];
-		strcpy_s(producator, strlen(producator) + 1, producator);
+		strcpy_s(this->producator, strlen(producator) + 1, producator);
 	}
 
+	//destructor
 	~Uniforma() {
 		if (this->producator != nullptr) {
 			delete[]this->producator;
@@ -175,7 +176,6 @@ public:
 			cout << "Obiectul nu are valoare producator!" << endl;
 		}
 		return out;
-
 	}
 
 	//fct statica calcul
@@ -195,11 +195,42 @@ void main() {
 	//clasa abecedar
 	Abecedar abecedarUnu;
 	cout << abecedarUnu << endl;
+
+	Abecedar a2(6,"TestEditurra", "TitluTest", 454.5);
+	cout << a2 << endl;
+
+	Abecedar a3(322, "Titlu3");
+	cout << a3 << endl;
+
+	float rezultatFunctie = Abecedar::pretPePagina(a2);
+	cout << "Pret pe pagina" << rezultatFunctie << endl;
+
+
 	//clasa manual
+	Manual manualUnu;
+	cout << manualUnu << endl;
+
+	Manual m2(25.6, "Editura2");
+	cout << m2 << endl;
+
+	char valoareDenumire[] = "Matematica";
+	Manual m3(valoareDenumire, "Editura3", 122.5);
+	cout << m3 << endl;
+
+	float cresterePret = Manual::calculPretPerAutor(6);
+	cout << "Pretul manualului cand sunt 6 autori este de: " << cresterePret << " lei" << endl;
+
+
 	//clasa uniforma
 	Uniforma uniformaUnu;
 	cout << uniformaUnu << endl;
+
+	Uniforma u2("Turcoaz", 68);
+	cout << u2 << endl;
 	
+	char valProd[] = "Gandul";
+	Uniforma u3("Bleumarin", 66, valProd, 5000);
+
 	float pretMediu = Uniforma::calculPretMediu(2500);
 	cout << "pretul mediu per componenta este: " << pretMediu;
 
