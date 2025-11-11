@@ -3,12 +3,13 @@ using namespace std;
 
 //Andrei = Abecedar; Mihai = Manual ; Ursachi = Uniforma
 class Abecedar {
-public:
+private:
 	int bucatiVandute;
 	const string titlu;
 	static int nrPagini;
 	string editura;
 	float* pretAbecedar;
+public:
 	//constructor 1
 	Abecedar(int bucatiVandute, string titluNou) : titlu(titluNou) {
 		this->bucatiVandute = bucatiVandute;
@@ -26,6 +27,45 @@ public:
 		this->bucatiVandute = bucati;
 		this->editura = edituraNoua;
 		this->pretAbecedar = new float(pret);
+	}
+
+	//getter si setteri
+	int getBucatiVandute() {
+		return this->bucatiVandute;
+	}
+	void setBucatiVandute(int bucatiVandute) {
+		this->bucatiVandute = bucatiVandute;
+	}
+
+	const string getTitlu() {
+		return this->titlu;
+	}
+	
+	int static getNrPagini() {
+		return Abecedar::nrPagini;
+	}
+	void setNrPagini(static int nrPagini) {
+		Abecedar::nrPagini=nrPagini;
+	}
+
+	string getEditura() {
+		return this->editura;
+	}
+	void setEditura(string editura) {
+		this->editura = editura;
+	}
+
+	float getPretAbecedar() {
+		if (this->pretAbecedar == nullptr) {
+			return 0;
+		}
+		return *(this->pretAbecedar);
+	}
+	void setPretAbecedar(float pretAbecedar) {
+		if (this->pretAbecedar == nullptr) {
+			this->pretAbecedar = new float;
+		}
+		*this->pretAbecedar = pretAbecedar;
 	}
 
 	//supraincarcare <<
@@ -59,12 +99,13 @@ public:
 int Abecedar::nrPagini = 100;
 
 class Manual {
-public:
+private:
 	char* denumire;
 	int static numarAutori;
 	const string edituraManual;
 	float pretManual;
 
+public:
 	Manual():edituraManual("Pagina") {
 		this->denumire = nullptr;
 		this->pretManual = 20.3;
@@ -82,6 +123,14 @@ public:
 		this->pretManual = pretManual;
 	}
 
+	//destructor
+	~Manual() {
+		if (this->denumire != nullptr) {
+			delete[]this->denumire;
+		}
+		cout << "aici se apeleaza destructor" << endl;
+	}
+
 	//getter si setter
 	int getPret() {
 		return this->pretManual;
@@ -91,13 +140,7 @@ public:
 		this->pretManual = pretManual;
 	}
 
-	//destructor
-	~Manual() {
-		if (this->denumire != nullptr) {
-			delete[]this->denumire;
-		}
-		cout << "aici se apeleaza destructor" << endl;
-	}
+	
 
 	//supraincarcare <<
 	friend ostream& operator<<(ostream& out, const Manual& m) {
@@ -129,13 +172,13 @@ int Manual::numarAutori = 5;
 
 
 class Uniforma {
-public:
+private:
 	int marime;
 	static int nrComponente;
 	char* producator;
 	float pret;
 	const string culoare;
-
+public:
 	Uniforma():culoare("albastru") {
 		this->marime = 20;
 		this->pret = 5000.99;
