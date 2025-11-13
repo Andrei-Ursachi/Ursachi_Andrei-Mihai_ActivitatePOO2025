@@ -26,9 +26,22 @@ public:
 	Abecedar(int bucati, string edituraNoua, string titluNou, float pret) : titlu(titluNou) {
 		this->bucatiVandute = bucati;
 		this->editura = edituraNoua;
-		this->pretAbecedar = new float(pret);
+		this->pretAbecedar = new float[this->bucatiVandute];
+		for (int i = 0; i < bucatiVandute; i++) {
+			this->pretAbecedar[i] = pretAbecedar[i];
+		}
 	}
 
+	//constr copiere abecedar
+	Abecedar(const Abecedar& a): titlu(a.titlu) {
+		this->bucatiVandute = a.bucatiVandute;
+		this->editura = a.editura;
+		this->pretAbecedar = new float[this->bucatiVandute];
+		for (int i = 0; i < bucatiVandute; i++) {
+			this->pretAbecedar[i] = a.pretAbecedar[i];
+		}
+	}
+	
 	//getter si setteri
 	int getBucatiVandute() {
 		return this->bucatiVandute;
@@ -111,7 +124,7 @@ public:
 		this->pretManual = 20.3;
 	}
 
-	Manual(float pretManual, const string edituraManual) :edituraManual(edituraManual) {
+	Manual(float pretManual, const char* denumire) :edituraManual(edituraManual) {
 		this->denumire = new char[strlen(denumire)+1];
 		strcpy_s(this->denumire, strlen(denumire) + 1,denumire);
 		this->pretManual = pretManual;
@@ -121,6 +134,13 @@ public:
 		this->denumire = new char[strlen(denumire)+1];
 		strcpy_s(this->denumire, strlen(denumire) + 1,denumire);
 		this->pretManual = pretManual;
+	}
+
+	//constructor copiere
+	Manual(const Manual& m) :edituraManual(m.edituraManual) {
+		this->denumire = new char[strlen(m.denumire) + 1];
+		strcpy_s(this->denumire, strlen(m.denumire) + 1, m.denumire);
+		this->pretManual = m.pretManual;
 	}
 
 	//destructor
@@ -140,6 +160,28 @@ public:
 		this->pretManual = pretManual;
 	}
 
+	char* getDenumire() {
+		return this->denumire;
+	}
+
+	void setDenumire(const char* denumire) {
+		if (this->denumire != nullptr) {
+			delete[]this->denumire;
+		}
+		this->denumire = new char[strlen(denumire) + 1];
+		strcpy_s(this->denumire, strlen(denumire) + 1, denumire);
+	}
+
+	string getEditura() {
+		return this->edituraManual;
+	}
+
+	int static getNumarAutori() {
+		return Manual::numarAutori;
+	}
+	void setNumarAutori(static int numarAutori) {
+		Manual::numarAutori = numarAutori;
+	}
 	
 
 	//supraincarcare <<
@@ -198,12 +240,60 @@ public:
 		strcpy_s(this->producator, strlen(producator) + 1, producator);
 	}
 
+	//contructor copiere
+	Uniforma(const Uniforma& u) :culoare(u.culoare) {
+		this->marime = u.marime;
+		this->pret = u.pret;
+		this->producator = new char[strlen(u.producator) + 1];
+		strcpy_s(this->producator, strlen(u.producator) + 1, u.producator);
+	}
+
 	//destructor
 	~Uniforma() {
 		if (this->producator != nullptr) {
 			delete[]this->producator;
 		}
 		cout << "aici apelez destructor uniforma" << endl;
+	}
+
+	//getteri setteri
+	int getMarime() {
+		return this->marime;
+	}
+
+	void setMarime(int marime) {
+		this->marime = marime;
+	}
+
+	int static getNumarComponente() {
+		return Uniforma::nrComponente;
+	}
+	void setNumarAutori(static int nrComponente) {
+		Uniforma::nrComponente = nrComponente;
+	}
+
+	char* getProducator() {
+		return this->producator;
+	}
+
+	void setProducator(const char* producator) {
+		if (this->producator != nullptr) {
+			delete[]this->producator;
+		}
+		this->producator = new char[strlen(producator) + 1];
+		strcpy_s(this->producator, strlen(producator) + 1, producator);
+	}
+
+	float getPret() {
+		return this->pret;
+	}
+
+	void setPret(float pret) {
+		this->pret = pret;
+	}
+
+	string getCuloare() {
+		return this->culoare;
 	}
 
 	//overload <<
@@ -253,7 +343,7 @@ void main() {
 	Manual manualUnu;
 	cout << manualUnu << endl;
 
-	Manual m2(25.6, "Editura2");
+	Manual m2(25.6, "Mate");
 	cout << m2 << endl;
 
 	char valoareDenumire[] = "Matematica";
