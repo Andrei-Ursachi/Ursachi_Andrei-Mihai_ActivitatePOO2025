@@ -331,12 +331,19 @@ void main() {
 
 	Abecedar a2(6,"TestEditurra", "TitluTest", 454.5);
 	cout << a2 << endl;
+	
 
 	Abecedar a3(322, "Titlu3");
 	cout << a3 << endl;
 
 	float rezultatFunctie = Abecedar::pretPePagina(a2);
 	cout << "Pret pe pagina" << rezultatFunctie << endl;
+
+	cout << "-------------aici fac call la copiere" << endl;
+	Abecedar a4 = a2;
+	cout << a4;
+	cout << "-------------aici se termina call la copiere" << endl;
+
 
 
 	//clasa manual
@@ -353,6 +360,10 @@ void main() {
 	float cresterePret = Manual::calculPretPerAutor(6);
 	cout << "Pretul manualului cand sunt 6 autori este de: " << cresterePret << " lei" << endl;
 
+	cout << "-------------aici fac call la copiere" << endl;
+	Manual m4 = m3;
+	cout << m4;
+	cout << "-------------aici se termina call la copiere" << endl;
 
 	//clasa uniforma
 	Uniforma uniformaUnu;
@@ -365,6 +376,11 @@ void main() {
 	Uniforma u3("Bleumarin", 66, valProd, 5000);
 
 	float pretMediu = Uniforma::calculPretMediu(2500);
-	cout << "pretul mediu per componenta este: " << pretMediu;
+	cout << "pretul mediu per componenta este: " << pretMediu << endl;
+
+	cout << "-------------aici fac call la copiere" << endl;
+	Uniforma u4 = u3;
+	cout << u4;
+	cout << "-------------aici se termina call la copiere" << endl;
 
 }
