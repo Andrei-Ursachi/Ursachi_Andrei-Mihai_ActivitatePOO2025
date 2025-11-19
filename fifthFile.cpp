@@ -4,6 +4,7 @@
 using namespace std;
 
 class Petitie {
+public:
 	const int id;
 	string data;
 	string numeComplet;
@@ -12,7 +13,7 @@ class Petitie {
 	char* descriere;
 
 	//no param
-	Petitie() :id(id) {
+	Petitie() :id(0) {
 		this->data = "azi";
 		this->numeComplet = "Constructor unu";
 		this->nrZile = 2;
@@ -25,7 +26,7 @@ class Petitie {
 		this->numeComplet = numeComplet;
 		this->nrZile = nrZile;
 		this->status = status;
-		if (descriere != nullptr) {
+		if (this->descriere != nullptr) {
 			this->descriere = new char[strlen(descriere) + 1];
 			strcpy_s(this->descriere, strlen(descriere) + 1, descriere);
 		}
@@ -39,9 +40,9 @@ class Petitie {
 		this->numeComplet = pet.numeComplet;
 		this->nrZile = pet.nrZile;
 		this->status = pet.status;
-		if (descriere != nullptr) {
+		if (this->descriere != nullptr) {
 			this->descriere = new char[strlen(pet.descriere) + 1];
-			strcpy_s(this->descriere, strlen(pet.descriere) + 1, p.descriere);
+			strcpy_s(this->descriere, strlen(pet.descriere) + 1, pet.descriere);
 		}
 		else {
 			this->descriere = nullptr;
@@ -58,7 +59,6 @@ class Petitie {
 	friend ostream& operator<<(ostream& out, const Petitie& p) {
 		out << p.id << endl;
 		out << p.data << endl;
-		out << p.descriere << endl;
 		out << p.numeComplet << endl;
 		out << p.nrZile << endl;
 		out << p.status << endl;
@@ -69,9 +69,35 @@ class Petitie {
 			out << "Nu exista valoare pt. descriere!" << endl;
 		}
 		return out;
-	}
+	}	
 
-	void main() {
-
+	Petitie& operator=(const Petitie& pet) {
+		if (this->descriere != nullptr) {
+			delete[]this->descriere;
+		}
+		this->data = pet.data;
+		this->numeComplet = pet.numeComplet;
+		this->nrZile = pet.nrZile;
+		this->status = pet.status;
+		if (this->descriere != nullptr) {
+			this->descriere = new char[strlen(pet.descriere) + 1];
+			strcpy_s(this->descriere, strlen(pet.descriere) + 1, pet.descriere);
+		}
+		else {
+			this->descriere = nullptr;
+		}
+		return *this;
 	}
 };
+
+void main() {
+	Petitie p1;
+	cout << p1 << endl;
+
+	char text[] = "test";
+	Petitie p2("Anul 2002", "Reclamatie", 2, true, text);
+	cout << p2 << endl;
+
+	Petitie p3 = p2;
+	cout << p3 << endl;
+}
