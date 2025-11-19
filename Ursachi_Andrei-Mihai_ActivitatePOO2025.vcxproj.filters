@@ -27,5 +27,8 @@
     <ClCompile Include="forthCommit.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="fifthFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
