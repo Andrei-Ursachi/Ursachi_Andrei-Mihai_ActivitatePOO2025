@@ -30,5 +30,8 @@
     <ClCompile Include="fifthFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="fileForRe-do%27s.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
