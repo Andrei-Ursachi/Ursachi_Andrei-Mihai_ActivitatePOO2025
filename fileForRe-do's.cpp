@@ -17,7 +17,7 @@ public:
 	Biblioteca(string adresa, int nrAbonati, char* ultimaVizita) {
 		this->adresa = adresa;
 		this->nrAbonati = nrAbonati;
-		if (ultimaVizita != nullptr) {
+		if (this->ultimaVizita != nullptr) {
 			this->ultimaVizita = new char[strlen(ultimaVizita) + 1];
 			strcpy_s(this->ultimaVizita, strlen(ultimaVizita) + 1, ultimaVizita);
 		}
@@ -30,7 +30,7 @@ public:
 	Biblioteca(const Biblioteca& b) {
 		this->adresa = b.adresa;
 		this->nrAbonati = b.nrAbonati;
-		if (ultimaVizita != nullptr) {
+		if (this->ultimaVizita != nullptr) {
 			this->ultimaVizita = new char[strlen(b.ultimaVizita) + 1];
 			strcpy_s(this->ultimaVizita, strlen(b.ultimaVizita) + 1, b.ultimaVizita);
 		}
@@ -86,7 +86,7 @@ public:
 			}
 			this->adresa = b.adresa;
 			this->nrAbonati = b.nrAbonati;
-			if (ultimaVizita != nullptr) {
+			if (this->ultimaVizita != nullptr) {
 				this->ultimaVizita = new char[strlen(b.ultimaVizita) + 1];
 				strcpy_s(this->ultimaVizita, strlen(b.ultimaVizita) + 1, b.ultimaVizita);
 			}
@@ -97,10 +97,64 @@ public:
 		return *this;
 	}
 
+	float operator[](int poz) {
+		if (poz >= 0 && poz < this->nrAbonati) {
+			return this->ultimaVizita[poz];
+		}
+		else {
+			return -1;
+		}
+	}
+
+	Biblioteca& operator+=(int incrementare) {
+		this->nrAbonati += incrementare;
+		return *this;
+	}
+
+	Biblioteca& operator-=(int deincrementare) {
+		this->nrAbonati -= deincrementare;
+		if (this->nrAbonati < 0) {
+			this->nrAbonati = 0;
+		}
+		return *this;
+	}
+
+	Biblioteca operator++(int) {
+		Biblioteca copie = *this;
+		for (int i = 0; i < this->nrAbonati;i++) {
+			this->ultimaVizita[i]++;
+		}
+		return copie;
+	}
+
+	Biblioteca& operator++() {
+		for (int i = 0; i < this->nrAbonati;i++) {
+			this->ultimaVizita[i]++;
+		}
+	}
+
+
+	//Comanda operator++(int) {
+	//	Comanda copie = *this;
+	//	for (int i = 0; i < this->nrProduse;i++) {
+	//		this->preturiProduse[i]++;
+	//	}
+	//	return copie;
+	//}
+	////pre incrementare
+	//Comanda& operator++() {
+	//	for (int i = 0; i < this->nrProduse;i++) {
+	//		this->preturiProduse[i]++;
+	//	}
+	//	return*this;
+	//}
+
 };
 
 void main() {
-	Biblioteca b1;
+
+	char variabila[] ="azi";
+	Biblioteca b1("adresa2", 15, variabila);
 	cout << b1 << endl;
 
 	Biblioteca b2 = b1;
@@ -113,4 +167,15 @@ void main() {
 	b2.setAdresa("Bucuresti");
 	cout << b2 << endl;
 
+	cout << b2[4] << endl;
+	b2 += 5;
+	cout << b2 << endl;
+
+	b2 -= 7;
+	cout << b2 << endl;
+
+	//apel ++ 
+	b2 = b1++;
+	cout << b1 << endl;
+	cout << b2 << endl;
 }
