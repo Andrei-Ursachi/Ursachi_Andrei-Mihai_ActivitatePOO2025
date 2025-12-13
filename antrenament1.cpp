@@ -23,13 +23,19 @@ public:
 		}
 	}
 
-	Masina(const Masina& m) {
+	//copiere
+	Masina(const Masina& m):marca(m.marca) {
 		this->greutate = m.greutate;
 		this->nrLocuri = m.nrLocuri;
-		this->pret = new float[this->nrLocuri];
-		for (int i = 0; i < nrLocuri; i++) {
-			this->pret[i] = m.pret[i];
+		if (nrLocuri > 0 && m.pret != nullptr) {
+			this->pret = new float[this->nrLocuri];
+			for (int i = 0; i < this->nrLocuri; i++) {
+				this->pret[i] = m.pret[i];
+			}
 		}
+		else {
+			this->pret = nullptr;
+		}	
 	}
 
 	~Masina() {
@@ -68,6 +74,7 @@ public:
 		}
 	}
 
+	//supraincarcare <<
 	friend ostream& operator<<(ostream& out, const Masina& m) {
 		out << m.greutate << endl;
 		out << m.nrLocuri << endl;
@@ -81,10 +88,40 @@ public:
 		return out;
 	}
 
+	//supraincarcare = (ca constructorul de copiere)
+	Masina& operator=(const Masina& m) {
+		if (this != &m) {
+			if (this->pret != nullptr) {
+				delete[]this->pret;
+			}
+		}
+		this->greutate = m.greutate;
+		this->nrLocuri = m.nrLocuri;
+		if (nrLocuri > 0 && m.pret != nullptr) {
+			this->pret = new float[this->nrLocuri];
+			for (int i = 0; i < this->nrLocuri; i++) {
+				this->pret[i] = m.pret[i];
+			}
+		}
+		else {
+			this->pret = nullptr;
+		}
+		return *this;
+	}
 };
 
 
 void main() {
 	Masina m1;
 	cout << m1 << endl;
+
+	Masina m2(22.5, 5, "Ford");
+	cout << m2 << endl;
+
+	Masina m3 = m1;
+	cout << m3 << endl;
+
+	Masina m4;
+	m4 = m1;
+	cout << m4 << endl;
 }
